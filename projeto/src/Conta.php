@@ -2,9 +2,27 @@
 
 class Conta
 {
-  private string $cpfTitular;
-  private string $nomeTitular;
-  private float $saldo = 0;
+  private Titular $titular;
+  private float $saldo;
+  private static int $numeroContas = 0;
+
+  public function __construct(Titular $titular){
+    echo "Criando nova conta" . PHP_EOL;
+    $this->saldo = 0;
+    $this->titular = $titular;
+    self::$numeroContas++;
+  }
+  public function __destruct(){
+    self::$numeroContas--;
+  }
+  
+  public static function getNumeroContas(): int{
+    return self::$numeroContas;
+  }
+
+  public function getSaldo(): float{
+    return $this->saldo;
+  }
 
   public function sacar(float $valorASacar){
     if($valorASacar > $this->saldo || $valorASacar < 0){
